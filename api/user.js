@@ -55,7 +55,7 @@ router.post('/login', (req, res) => {
    
         msg: ''
     }
-    const payload = {
+    var payload = {
         id: null,
         name: null
     };

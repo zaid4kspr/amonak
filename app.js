@@ -6,6 +6,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose')
 var indexRouter = require('./api/index');
 var usersRouter = require('./api/user');
+var mailRouter = require('./api/mail');
 
 const passport = require('passport');
 require('dotenv').config()
@@ -47,6 +48,7 @@ require('./config/passport-config')(passport);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/mail', mailRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
