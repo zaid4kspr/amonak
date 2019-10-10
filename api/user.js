@@ -16,7 +16,6 @@ router.post('/register', (req, res) => {
     User.find({ email: req.body.email })
         .then(user => {
             if (user.length) {
-
                 let error = 'Email Address Exists in Database.';
                 return res.status(400).json(error);
             } else {

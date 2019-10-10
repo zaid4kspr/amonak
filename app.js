@@ -14,12 +14,17 @@ var app = express();
 
 //mongoDb connexion
 mongoose.set('useCreateIndex', true)
-mongoose.connect(process.env.DB_CONNEXION_STRING, { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', function () {
-  console.log('Connected to MongoDB')
+mongoose
+.connect(process.env.DB_CONNEXION_STRING, {
+useUnifiedTopology: true,
+useNewUrlParser: true,
 })
+.then(() => console.log('DB Connected!'))
+.catch(err => {
+
+console.log("DB Connection err" + err.message);
+});
+
 app.use('/uploads', express.static('uploads'));
 
 // view engine setup
