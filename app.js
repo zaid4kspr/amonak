@@ -12,6 +12,11 @@ const passport = require('passport');
 require('dotenv').config()
 var app = express();
 
+
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+
 //mongoDb connexion
 mongoose.set('useCreateIndex', true)
 mongoose
@@ -55,6 +60,17 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/mail', mailRouter);
 
+//This simply adds socket.io to res in our event loop
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
+
+
+socketEvents = require('./socketEvents')
+socketEvents(io)
+
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -71,4 +87,5 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+
+module.exports = {app: app, server: server};
